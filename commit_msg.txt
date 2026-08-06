@@ -1,0 +1,6 @@
+﻿新增 go-jwt：零依赖的 JWT 解析与状态检查工具
+
+- 解析 header.payload.signature，容忍 padding 与 Bearer 前缀
+- 检测 alg=none 漏洞，解析 exp/iat/nbf 时间声明（兼容 float64/string）
+- 支持 -json/-utc/-q 输出，仅解码不校验签名
+- 补充约 20 个单测，go vet/go test 全绿
