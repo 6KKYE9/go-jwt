@@ -60,7 +60,7 @@ func run(args []string, out io.Writer, in io.Reader) error {
 	if *quiet {
 		if st.Expired {
 			fmt.Fprintln(out, "已过期")
-			os.Exit(2)
+			return errExpired
 		}
 		fmt.Fprintln(out, "有效")
 		return nil
