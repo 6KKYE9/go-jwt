@@ -8,6 +8,7 @@ package main
 import (
 	"bufio"
 	"encoding/json"
+	"errors"
 	"flag"
 	"fmt"
 	"io"
@@ -16,8 +17,15 @@ import (
 	"time"
 )
 
+// errExpired 是 -q 模式下表示 token 已过期的哨兵错误，main 据此返回退出码 2。
+var errExpired = errors.New("token expired")
+
 func main() {
 	if err := run(os.Args[1:], os.Stdout, os.Stdin); err != nil {
+		if errors.Is(err, errExpired) {
+			// -q 模式里已过期用退出码 2 表达，方便脚本判断
+			os.Exit(2)
+		}
 		fmt.Fprintln(os.Stderr, "错误:", err)
 		os.Exit(1)
 	}
